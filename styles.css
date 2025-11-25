@@ -1,0 +1,234 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap");
+
+:root {
+  color-scheme: dark;
+  font-family: "Rubik", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #060b18;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, rgba(0, 173, 255, 0.25), transparent 55%),
+              radial-gradient(circle at 80% 10%, rgba(255, 99, 251, 0.3), transparent 50%),
+              linear-gradient(180deg, #050812 0%, #0d1627 60%, #03060d 100%);
+  color: #f7fbff;
+  overflow: hidden;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#gameCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hud {
+  position: absolute;
+  top: clamp(16px, 4vh, 48px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: clamp(12px, 3vw, 24px);
+  align-items: center;
+  padding: clamp(12px, 2vw, 20px) clamp(16px, 4vw, 32px);
+  background: rgba(7, 12, 24, 0.45);
+  backdrop-filter: blur(18px);
+  border-radius: 18px;
+  border: 1px solid rgba(84, 125, 255, 0.25);
+  box-shadow: 0 18px 45px rgba(3, 12, 32, 0.45);
+  flex-wrap: wrap;
+  z-index: 4;
+}
+
+.branding {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+}
+
+.title {
+  font-family: "Space Grotesk", "Rubik", sans-serif;
+  font-size: clamp(1.4rem, 2vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+  opacity: 0.65;
+  letter-spacing: 0.05em;
+}
+
+.score-panel {
+  display: grid;
+  gap: 6px;
+  padding: clamp(10px, 2vw, 14px) clamp(12px, 3vw, 18px);
+  background: rgba(19, 30, 54, 0.65);
+  border-radius: 16px;
+  border: 1px solid rgba(81, 144, 255, 0.2);
+  text-align: center;
+}
+
+.score-panel.best {
+  background: linear-gradient(160deg, rgba(232, 84, 255, 0.18), rgba(82, 163, 255, 0.18));
+  border-color: rgba(232, 84, 255, 0.3);
+}
+
+.score-panel .label {
+  font-size: clamp(0.68rem, 1.3vw, 0.85rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+}
+
+.score-panel .value {
+  font-family: "Space Grotesk", "Rubik", sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  text-shadow: 0 10px 20px rgba(13, 20, 41, 0.6);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 4vw, 48px);
+  background: radial-gradient(circle at 50% 30%, rgba(10, 24, 54, 0.7), rgba(7, 12, 24, 0.94));
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 220ms ease, visibility 220ms ease;
+  z-index: 5;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.overlay-card {
+  width: min(480px, 90vw);
+  padding: clamp(24px, 5vw, 40px);
+  border-radius: 24px;
+  background: rgba(8, 14, 28, 0.8);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(137, 162, 255, 0.28);
+  box-shadow: 0 22px 60px rgba(4, 12, 28, 0.7);
+  display: grid;
+  gap: clamp(18px, 3vw, 28px);
+  text-align: center;
+}
+
+.overlay-card h1 {
+  margin: 0;
+  font-family: "Space Grotesk", "Rubik", sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  letter-spacing: 0.06em;
+}
+
+.overlay-card p {
+  margin: 0;
+  font-size: clamp(0.95rem, 2.3vw, 1.05rem);
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+.result-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 18px;
+}
+
+.result-score {
+  display: grid;
+  gap: 6px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(64, 131, 255, 0.18), rgba(113, 77, 255, 0.18));
+  border: 1px solid rgba(119, 155, 255, 0.28);
+}
+
+.result-score.best {
+  background: linear-gradient(160deg, rgba(233, 93, 255, 0.25), rgba(79, 195, 255, 0.22));
+  border-color: rgba(233, 93, 255, 0.35);
+}
+
+.result-score .label {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.result-score .value {
+  font-family: "Space Grotesk", "Rubik", sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+.primary {
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: clamp(14px, 2.6vw, 18px) clamp(28px, 6vw, 44px);
+  border-radius: 999px;
+  font-family: "Space Grotesk", "Rubik", sans-serif;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #05162d;
+  background: linear-gradient(135deg, #5af2ff 0%, #7bddff 35%, #f67bff 100%);
+  box-shadow: 0 18px 40px rgba(45, 207, 255, 0.45);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.primary:active {
+  transform: translateY(2px) scale(0.99);
+  box-shadow: 0 12px 28px rgba(45, 207, 255, 0.35);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 18px;
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  opacity: 0.75;
+}
+
+.controls strong {
+  display: block;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8db9ff;
+}
+
+@media (max-width: 640px) {
+  .hud {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .score-panel {
+    width: 100%;
+  }
+}

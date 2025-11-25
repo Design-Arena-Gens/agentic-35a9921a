@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0d1627">
+  <title>Flappy Nebula</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="gameCanvas" aria-label="Flappy Bird inspired space flight game" role="img"></canvas>
+    <div class="hud">
+      <div class="branding">
+        <span class="title">Flappy Nebula</span>
+        <span class="subtitle">Graceful cosmic flight on any screen</span>
+      </div>
+      <div class="score-panel" aria-live="polite">
+        <span class="label">Score</span>
+        <span id="scoreValue" class="value">0</span>
+      </div>
+      <div class="score-panel best" aria-live="polite">
+        <span class="label">Best</span>
+        <span id="bestValue" class="value">0</span>
+      </div>
+    </div>
+    <div id="overlay" class="overlay">
+      <div class="overlay-card">
+        <h1>Tap, Click, or Press Space</h1>
+        <p>Guide the nebula bird through energy gates and chase a new personal best.</p>
+        <div id="resultPanel" class="result-panel" hidden>
+          <div class="result-score">
+            <span class="label">Score</span>
+            <span id="resultScore" class="value">0</span>
+          </div>
+          <div class="result-score best">
+            <span class="label">Best</span>
+            <span id="resultBest" class="value">0</span>
+          </div>
+        </div>
+        <button id="playButton" class="primary">Play</button>
+        <div class="controls">
+          <div>
+            <strong>Desktop</strong>
+            <span>Space • Click • ↑</span>
+          </div>
+          <div>
+            <strong>Touch</strong>
+            <span>Tap anywhere</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
